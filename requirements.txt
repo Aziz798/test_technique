@@ -28,3 +28,4 @@ tzdata
 uritemplate
 urllib3
 Pillow
+psycopg2-binary
