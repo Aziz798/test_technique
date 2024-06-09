@@ -92,7 +92,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'test_technique',
+        'NAME': 'test_technique2',
         'USER': 'postgres',
         'PASSWORD': 'root',
         'HOST': 'localhost',

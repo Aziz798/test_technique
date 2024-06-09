@@ -10,13 +10,14 @@ class GoogleAuth:
     def validate(access_token):
         try:
             id_info = id_token.verify_oauth2_token(access_token, requests.Request())
-            if 'accounts.google.com' in id_info['iss']:
-                return id_info
+            print("id_info",id_info)
+            return id_info
         except Exception as e:
             return 'token is invalid'
 
 def register_social_user(provider,email,first_name,last_name,is_supplier):
     user = User.objects.filter(email=email)
+    print("user",user)
     if user.exists():
         if provider == user[0].auth_provider:
             login_user = authenticate(email=email, password=settings.SOCIAL_AUTH_PASSWORD)

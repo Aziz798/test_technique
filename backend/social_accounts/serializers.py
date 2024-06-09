@@ -15,12 +15,13 @@ class GoogleAuthSerializer(serializers.Serializer):
         access_token = attrs.get('access_token')
         is_supplier = attrs.get('is_supplier')
         user_data = GoogleAuth.validate(access_token)
-
+        print("user_data",user_data)
         # Log user data for debugging
         logger.debug("User data from Google: %s", user_data)
-
+        if user_data == 'token is invalid':
+            raise serializers.ValidationError("This token has expired or is invalid, please try again.")
         try:
-            user_data['sub']
+            user_data['exp'] = int(user_data['exp'])
         except KeyError:
             raise serializers.ValidationError("This token has expired or is invalid, please try again.")
         
@@ -30,5 +31,5 @@ class GoogleAuthSerializer(serializers.Serializer):
         user_id = user_data.get('sub', '')
         email = user_data.get('email', '')
         first_name = user_data.get('given_name', '')
-        last_name = user_data.get('given_name', '')
+        last_name = user_data.get('family_name', '')
         return register_social_user( 'google', email, first_name, last_name, is_supplier)
